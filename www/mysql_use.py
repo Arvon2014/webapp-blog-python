@@ -30,3 +30,19 @@ class _Engince(object):
 
 engince = None
 
+class _DbCtx(thteading.local):
+    def __init__(self):
+        self.connection = None
+        self.transactions = 0
+    def is_init(self):
+        return not self.connection is None
+    def init(self):
+        self.connection = LasyConnection()
+        self.transactions = 0
+    def cleanup(self):
+        self.connection.cleanup()
+        self.connection = 0
+    def cursor(self):
+        return self.connection.cursor()
+
+_db_ctx = _DbCtx()
