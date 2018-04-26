@@ -9,10 +9,10 @@ def create_pool(loop, **kw):
     logging.info('Create database connection pool...')
     global __pool
     __pool = yield from aiomysql.create_pool(
-        host=kw.get('host', '192.144.135.189'),
+        host=kw.get('host', 'localhost'),
         port=kw.get('port', 3306),
-        user=kw['user1'],
-        password=kw['wd'],
+        user=kw['arvon'],
+        password=kw['arvon'],
         db=kw['web_app'],
         charset=kw.get('charset', 'utf8'),
         autocommit=kw.get('autocommit', True),
@@ -35,6 +35,7 @@ def select(sql, args, size=None):
         yield from cur.close()
         logging.info('Rows returned: %s' % len(rs))
         return rs
+
 
 
 def execute(sql, args, autocommit=True):
@@ -213,13 +214,13 @@ class Mode(dict, metaclass=ModeMetaclass):
 
 
 
-from orm import Model, StringField, IntegerField
-
-class User(Model):
-    __table__ = 'users'
-    id = IntegerField(primary_key=True)
-    name = StringField()
-
-user = User(id=007, name='Arvon')
-user.insert()
-users = User.findAll()
+# from orm import Model, StringField, IntegerField
+#
+# class User(Model):
+#     __table__ = 'users'
+#     id = IntegerField(primary_key=True)
+#     name = StringField()
+#
+# user = User(id=007, name='Arvon')
+# user.insert()
+# users = User.findAll()
